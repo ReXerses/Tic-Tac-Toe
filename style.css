@@ -1,22 +1,25 @@
+@font-face {
+    font-family: Game;
+    src: url(./media/Game.ttf);
+}
+
+
 body {
     margin: 0px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 header {
     display: flex;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.6rem;
     background-color: azure;
     gap: 1rem;
     align-items: center;
-}
-
-header > img {
-    height: 50px;
 }
 
 h1 {
@@ -39,6 +42,8 @@ h2 {
     background-color: aliceblue;
     justify-content: space-around;
     align-items: center;
+    padding: 5px;
+    gap: 1rem;
 }
 
 .first-point-board , .second-point-board {
@@ -53,13 +58,21 @@ h2 {
     flex: 1;
     border: 1px solid black;
     background-color: #DACC3E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .points {
     flex: 2;
     border: 1px solid black;
     background-color: darkgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
 }
+
 
 .board-space {
     display: flex;
@@ -73,12 +86,24 @@ h2 {
     display: flex;
     flex: 1;
     background-color: aquamarine;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 5px;
+}
+
+.versus {
+    width: 18rem;
+    height: 4rem;
+    font-size: 3rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .board {
     display: grid;
-    height: 300px;
-    width: 300px;
+    height: 20rem;
+    width: 20rem;
     gap: 1px;
     grid-template-columns: repeat(3, 1fr);
     background-color: brown;
