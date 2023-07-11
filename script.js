@@ -1,9 +1,36 @@
 let player1, player2;
 
 const game = (() => {
-
+    
     let sceltaFlag = 0;
   
+    function aggiornaInterfaccia (player1, player2) {
+        const player1Name = document.getElementById('player1Name');
+        const player1Points = document.getElementById('player1Points');
+
+        const player2Name = document.getElementById('player2Name');
+        const player2Points = document.getElementById('player2Points');
+
+        player1Name.textContent = player1.nome;
+        player1Points.textContent = player1.punteggio;
+
+        player2Name.textContent = player2.nome;
+        player2Points.textContent = player2.punteggio;
+    }
+
+    function inizializzaGameBoard () {
+        for (let i=0 ; i<9 ; i++) {
+            let casellaBoard = document.getElementById(i);
+            casellaBoard.disabled = false;
+        }
+    }
+
+    function eliminaSceltaPLayer (form) {
+        const zonaSceltaPlayer = document.querySelector('.scelte-player')
+        form.remove();
+        zonaSceltaPlayer.remove();
+    }
+
     function estraiInformazioniForm(form) {
         const formData = new FormData(form);
         const player1Name = formData.get('player1Name');
@@ -17,15 +44,19 @@ const game = (() => {
 
         player1 = player(player1Name, player1Symbol);
         player2 = player(player2Name, player2Symbol);
-    
-        console.log(player1);
-        console.log(player2);
-        return [player1, player2];
+
+        // flag per i turni di gioco
+        player1.turno = true;
+        player2.turno = false;
+        
+        aggiornaInterfaccia(player1, player2);
       }
 
     const player = (nome, segno) => {
         const mosse = [];
-        return { nome , segno, mosse};
+        let punteggio = 0;
+        let turno;
+        return { nome , segno, mosse, punteggio, turno};
     };
 
     function controRobot () {
@@ -115,16 +146,18 @@ const game = (() => {
             event.preventDefault();
       
             // Estrai le informazioni dal form
-            const informazioniForm = estraiInformazioniForm(form);
+            estraiInformazioniForm(form);
+
+            // Inizializzazione tabelle punti
+            aggiornaInterfaccia(player1, player2);
+
+            // Attiva i pulsanti
+            inizializzaGameBoard();
       
-            // Crea il giocatore utilizzando le informazioni estratte
-            //const giocatore1 = creaGiocatore(informazioniForm.nome, informazioniForm.segno);
-            //const giocatore2 = creaGiocatore
-      
-            // ... fai qualcosa con il giocatore creato ...
       
             // Resetta il form
             form.reset();
+            eliminaSceltaPLayer (form);
           });
         
         // Aggiungi il form alla posizione desiderata nel documento
@@ -194,14 +227,17 @@ const game = (() => {
             
             sceltaFlag = 1;
             // Estrai le informazioni dal form
-            const informazioniForm = estraiInformazioniForm(form);
+            estraiInformazioniForm(form);
       
-            // Crea il giocatore utilizzando le informazioni estratte
-            //const giocatore = creaGiocatore(informazioniForm.nome, informazioniForm.segno);
-      
+            // Inizializzazione tabelle punti
+            aggiornaInterfaccia(player1, player2);
+
+            // Attiva i pulsanti
+            inizializzaGameBoard ()
       
             // Resetta il form
             form.reset();
+            eliminaSceltaPLayer (form);
           });
         
         // Aggiungi il form alla posizione desiderata nel documento
