@@ -4,6 +4,7 @@ const game = (() => {
     
     let sceltaFlag = 0; // flag per conservare la scelta tra secondo player oppure Bot
     let turnoAttuale = 1; // 1 primo giocatore , 2 secondo giocatore
+
     function aggiornaInterfaccia (player1, player2) {
         const player1Name = document.getElementById('player1Name');
         const player1Points = document.getElementById('player1Points');
@@ -16,6 +17,7 @@ const game = (() => {
 
         player2Name.textContent = player2.nome;
         player2Points.textContent = player2.punteggio;
+
     }
 
     function inizializzaGameBoard () {
@@ -68,7 +70,7 @@ const game = (() => {
         if (giocatore.mosse.length >= 3) {
             
             for (let combinazione of combinazioniVincenti) {
-                console.log('sono dentro il for');
+                
                 let combinazioneVincenteTrovata = true;
                 for (let mossa of combinazione) {
 
@@ -99,8 +101,29 @@ const game = (() => {
 
             player1.mosse.push(parseInt(casella.id));
             if (controlloVittoria(player1)) {
-                
+                const modal = document.getElementById('modal');
+                const winnerText = document.getElementById('winner-text');
+
+                player1.punteggio+= 1;
+                winnerText.textContent = `Vince ${player1.nome}!`;
+                modal.style.display = 'flex';
+
+                turnoAttuale =1; 
+                return;
                 // Esegui le azioni per dichiarare il vincitore o terminare il gioco
+            }
+            
+            // Pareggio
+            if (player1.mosse.length === 5 && player2.mosse.length === 4) {
+            
+                const modal = document.getElementById('modal');
+                const winnerText = document.getElementById('winner-text');
+                    
+
+                winnerText.textContent = `Pareggio!`;
+                modal.style.display = 'flex';
+                turnoAttuale= 1;
+                return;
             }
             
             turnoAttuale = 2;
@@ -116,12 +139,19 @@ const game = (() => {
 
             player2.mosse.push(parseInt(casella.id));
             if (controlloVittoria(player2)) {
+                const modal = document.getElementById('modal');
+                const winnerText = document.getElementById('winner-text');
+                
+                player2.punteggio+= 1;
+                winnerText.textContent = `Vince ${player2.nome}!`;
+                modal.style.display = 'flex';
                 
                 // Esegui le azioni per dichiarare il vincitore o terminare il gioco
             }
 
             turnoAttuale = 1;
-        }
+        } 
+        
     }
 
     function gestionePulsantiBoard (event) {
@@ -130,8 +160,6 @@ const game = (() => {
         casella.disabled = true;
         gestioneTurniGiocatori (casella);
 
-
-        
     }
 
     const player = (nome, segno) => {
@@ -156,9 +184,27 @@ const game = (() => {
         return caselleBoard;
     }
 
+    function nuovoRound () {
+        const nuovoRoundButton = document.getElementById('newRound-button');
+        return nuovoRoundButton;
+    }
+
+    function nuovaPartita () {
+        const resetButton = document.getElementById('reset-button');
+        return resetButton;
+    }
+
     const sceltePlayer = document.querySelector('.scelte-player');
     const versusPlayer = document.getElementById(101);
     const versusBot = document.getElementById(102);
+
+    function riaggiungiPulsanti () {
+        main = document.getElementById('mainContainer')
+
+        main.appendChild(sceltePlayer);
+        sceltePlayer.appendChild(versusPlayer);
+        sceltePlayer.appendChild(versusBot);
+    }
 
     function giocatoreScelto() {
         // Rimuovi i pulsanti
@@ -336,8 +382,13 @@ const game = (() => {
         player ,
         controRobot ,
         controPlayer ,
+        riaggiungiPulsanti ,
+        nuovaPartita,
+        nuovoRound ,
         selezioneCaselleBoard,
         gestionePulsantiBoard, 
+        inizializzaGameBoard,
+        aggiornaInterfaccia,
         giocatoreScelto,
         botScelto ,
     };
@@ -350,3 +401,37 @@ game.controRobot().addEventListener('click' , game.botScelto);
 game.selezioneCaselleBoard().forEach((casella) => {
     casella.addEventListener('click' , game.gestionePulsantiBoard);
 });
+
+game.nuovaPartita().addEventListener('click' , function () {
+    player1 = {};
+    player2= {};
+    
+    modal = document.getElementById('modal');
+    modal.style.display = 'none';
+
+    game.selezioneCaselleBoard().forEach((casella) => {
+        casella.style.backgroundImage = 'none';
+        casella.disabled = true;
+    });
+    
+    game.aggiornaInterfaccia(player1, player2);
+
+    game.riaggiungiPulsanti();
+    }
+);
+
+game.nuovoRound().addEventListener('click' , function () {
+    player1.mosse = [];
+    player2.mosse = [];
+
+    modal = document.getElementById('modal');
+    modal.style.display = 'none';
+
+    game.selezioneCaselleBoard().forEach((casella) => {
+        casella.style.backgroundImage = 'none';
+        casella.disabled = false;
+    });
+   
+    game.aggiornaInterfaccia(player1, player2);
+   
+})
