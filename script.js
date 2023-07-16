@@ -1,10 +1,44 @@
 let player1, player2;
+let mosseDisponibili = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let sceltaFlag; // flag per conservare la scelta tra secondo player oppure Bot
+let turnoAttuale = 1; // 1 primo giocatore , 2 secondo giocatore
 
 const game = (() => {
-    
-    let sceltaFlag = 0; // flag per conservare la scelta tra secondo player oppure Bot
-    let turnoAttuale = 1; // 1 primo giocatore , 2 secondo giocatore
+    const sceltePlayer = document.querySelector('.scelte-player');
+    const versusPlayer = document.getElementById(101);
+    const versusBot = document.getElementById(102);
 
+    const player = (nome, segno) => {
+        const mosse = [];
+        let punteggio = 0;
+        let turno;
+        return { nome , segno, mosse, punteggio, turno};
+    };
+
+    function getControBot () {
+        const versusBot = document.getElementById(102);
+        return versusBot;
+    }
+
+    function getControPlayer () {
+        const versusPlayer = document.getElementById(101);
+        return versusPlayer;
+    }
+
+    function getCaselleBoard () {
+        const caselleBoard = document.querySelectorAll('.casella');
+        return caselleBoard;
+    }
+
+    function getNuovoRound () {
+        const nuovoRoundButton = document.getElementById('newRound-button');
+        return nuovoRoundButton;
+    }
+
+    function getNuovaPartita () {
+        const resetButton = document.getElementById('reset-button');
+        return resetButton;
+    }
     function aggiornaInterfaccia (player1, player2) {
         const player1Name = document.getElementById('player1Name');
         const player1Points = document.getElementById('player1Points');
@@ -100,6 +134,11 @@ const game = (() => {
             }
 
             player1.mosse.push(parseInt(casella.id));
+            const index = mosseDisponibili.indexOf(parseInt(casella.id));
+            if (index > -1) {
+            mosseDisponibili.splice(index, 1);
+            }
+
             if (controlloVittoria(player1)) {
                 const modal = document.getElementById('modal');
                 const winnerText = document.getElementById('winner-text');
@@ -109,10 +148,11 @@ const game = (() => {
                 modal.style.display = 'flex';
 
                 turnoAttuale =1; 
+                
                 return;
-                // Esegui le azioni per dichiarare il vincitore o terminare il gioco
+          
             }
-            
+
             // Pareggio
             if (player1.mosse.length === 5 && player2.mosse.length === 4) {
             
@@ -127,7 +167,8 @@ const game = (() => {
             }
             
             turnoAttuale = 2;
-        } else if (turnoAttuale === 2) {
+
+        } else if (turnoAttuale === 2 ) {
 
             if (player2.segno === 'O') {
                 casella.style.backgroundImage = 'url(./media/O.png)'
@@ -146,12 +187,23 @@ const game = (() => {
                 winnerText.textContent = `Vince ${player2.nome}!`;
                 modal.style.display = 'flex';
                 
-                // Esegui le azioni per dichiarare il vincitore o terminare il gioco
             }
 
             turnoAttuale = 1;
-        } 
+        }
         
+    }
+
+/* ------------------  Funzione modalità facile contro il bot (mosse random) ---------------- */
+    function mossaBotFacile () {
+
+        const randomIndex = Math.floor(Math.random() * mosseDisponibili.length);
+        const botMove = mosseDisponibili[randomIndex];
+
+        const botCasella = document.getElementById(botMove.toString());
+        botCasella.click();
+        mosseDisponibili.splice(randomIndex, 1);
+
     }
 
     function gestionePulsantiBoard (event) {
@@ -161,42 +213,6 @@ const game = (() => {
         gestioneTurniGiocatori (casella);
 
     }
-
-    const player = (nome, segno) => {
-        const mosse = [];
-        let punteggio = 0;
-        let turno;
-        return { nome , segno, mosse, punteggio, turno};
-    };
-
-    function controRobot () {
-        const versusBot = document.getElementById(102);
-        return versusBot;
-    }
-
-    function controPlayer () {
-        const versusPlayer = document.getElementById(101);
-        return versusPlayer;
-    }
-
-    function selezioneCaselleBoard () {
-        const caselleBoard = document.querySelectorAll('.casella');
-        return caselleBoard;
-    }
-
-    function nuovoRound () {
-        const nuovoRoundButton = document.getElementById('newRound-button');
-        return nuovoRoundButton;
-    }
-
-    function nuovaPartita () {
-        const resetButton = document.getElementById('reset-button');
-        return resetButton;
-    }
-
-    const sceltePlayer = document.querySelector('.scelte-player');
-    const versusPlayer = document.getElementById(101);
-    const versusBot = document.getElementById(102);
 
     function riaggiungiPulsanti () {
         main = document.getElementById('mainContainer')
@@ -275,9 +291,11 @@ const game = (() => {
         submitButton.setAttribute('target', '_blank');
         form.appendChild(submitButton);
 
+        sceltaFlag = 0;
+
         form.addEventListener('submit', function (event) {
             event.preventDefault();
-      
+            ////////////////////////////////////////////sceltaFlag = 0;
             // Estrai le informazioni dal form
             estraiInformazioniForm(form);
 
@@ -298,6 +316,7 @@ const game = (() => {
     }
 
     function botScelto() {
+        sceltaFlag = 1;
         // Rimuovi i pulsanti
         versusPlayer.remove();
         versusBot.remove();
@@ -355,10 +374,11 @@ const game = (() => {
         submitButton.setAttribute('target', '_blank');
         form.appendChild(submitButton);
 
+        
         form.addEventListener('submit', function (event) {
             event.preventDefault();
             
-            sceltaFlag = 1;
+            ///////////////////////sceltaFlag = 1;
             // Estrai le informazioni dal form
             estraiInformazioniForm(form);
       
@@ -371,21 +391,24 @@ const game = (() => {
             // Resetta il form
             form.reset();
             eliminaSceltaPLayer (form);
-          });
+        });
         
         // Aggiungi il form alla posizione desiderata nel documento
         sceltePlayer.appendChild(form);
+        sceltaFlag = 1;
+
     }
 
 
     return {
+        mossaBotFacile,
         player ,
-        controRobot ,
-        controPlayer ,
+        getControBot ,
+        getControPlayer ,
+        getNuovoRound ,
+        getNuovaPartita,
+        getCaselleBoard,
         riaggiungiPulsanti ,
-        nuovaPartita,
-        nuovoRound ,
-        selezioneCaselleBoard,
         gestionePulsantiBoard, 
         inizializzaGameBoard,
         aggiornaInterfaccia,
@@ -394,22 +417,40 @@ const game = (() => {
     };
 })();
 
-game.controPlayer().addEventListener('click', game.giocatoreScelto);
+game.getControPlayer().addEventListener('click', game.giocatoreScelto);
 
-game.controRobot().addEventListener('click' , game.botScelto);
+game.getControBot().addEventListener('click' , game.botScelto);
 
-game.selezioneCaselleBoard().forEach((casella) => {
-    casella.addEventListener('click' , game.gestionePulsantiBoard);
+
+game.getCaselleBoard().forEach((casella) => {
+
+            casella.addEventListener('click' , function (event) {
+
+                if(sceltaFlag === 0) {
+                    game.gestionePulsantiBoard(event);
+                    console.log('non questo!');
+                } else if (sceltaFlag === 1) {
+                    
+                    game.gestionePulsantiBoard(event);
+                    if(turnoAttuale === 2) {
+                        game.mossaBotFacile();
+                    }
+                }
+                
+            
+            })
 });
 
-game.nuovaPartita().addEventListener('click' , function () {
+
+game.getNuovaPartita().addEventListener('click' , function () {
     player1 = {};
     player2= {};
+    mosseDisponibili = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     
     modal = document.getElementById('modal');
     modal.style.display = 'none';
 
-    game.selezioneCaselleBoard().forEach((casella) => {
+    game.getCaselleBoard().forEach((casella) => {
         casella.style.backgroundImage = 'none';
         casella.disabled = true;
     });
@@ -420,18 +461,19 @@ game.nuovaPartita().addEventListener('click' , function () {
     }
 );
 
-game.nuovoRound().addEventListener('click' , function () {
+game.getNuovoRound().addEventListener('click' , function () {
     player1.mosse = [];
     player2.mosse = [];
+    mosseDisponibili = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
     modal = document.getElementById('modal');
     modal.style.display = 'none';
 
-    game.selezioneCaselleBoard().forEach((casella) => {
+    game.getCaselleBoard().forEach((casella) => {
         casella.style.backgroundImage = 'none';
         casella.disabled = false;
     });
    
     game.aggiornaInterfaccia(player1, player2);
    
-})
+});
