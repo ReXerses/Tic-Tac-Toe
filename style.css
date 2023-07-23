@@ -1,8 +1,3 @@
-@font-face {
-    font-family: Game;
-    src: url(./media/Game.ttf);
-}
-
 
 body {
     margin: 0px;
@@ -10,14 +5,14 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 header {
     display: flex;
     justify-content: center;
     font-size: 1.6rem;
-    background-color: azure;
+    background-color: #067BC2;
     gap: 1rem;
     align-items: center;
 }
@@ -33,13 +28,13 @@ h2 {
 .main {
     display: flex;
     flex: 1;
+    background-color: #84BCDA;
     flex-direction: column;
 }
 
 .points-board {
     display: flex;
     flex: 1;
-    background-color: aliceblue;
     justify-content: space-around;
     align-items: center;
     padding: 5px;
@@ -49,35 +44,36 @@ h2 {
 .first-point-board , .second-point-board {
     height: 7rem;
     width: 14rem;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
+    row-gap: 1rem;
 }
 
 .name {
     flex: 1;
-    border: 1px solid black;
-    background-color: #DACC3E;
+    border-radius: 16px;
+    background-color: #F17105;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .points {
     flex: 2;
-    border: 1px solid black;
-    background-color: darkgreen;
+    background-color: #F17105;
+    border-radius: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 4rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 
 .board-space {
     display: flex;
     flex: 3;
-    background-color: blueviolet;
     justify-content: center;
     align-items: center;
 }
@@ -85,28 +81,99 @@ h2 {
 .scelte-player {
     display: flex;
     flex: 1;
-    background-color: aquamarine;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    padding: 5px;
+    padding: 1rem;
 }
 
 .versus {
-    width: 18rem;
     height: 4rem;
-    font-size: 2rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.6rem;
+    width: 15vw;
+    min-width: 14rem;
+    border: 2px solid #F17105;
+    border-radius: 16px;
+    background-color: rgb(240 248 255 / 75%);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.versus:hover {
+    color: rgb(0, 0, 0);
+    background-color: #4e4e9f;
+    opacity: 1;
+    background-image: radial-gradient(#F2A359 1px, transparent 1px), radial-gradient(#F2A359 1px, #b1e3eb 1px);
+    background-size: 40px 40px;
+    background-position: 0 0,20px 20px;
+    transform: scale(1.1);
+}
+
+form {
+    display: flex;
+    padding: 2.5rem;
+    border: 1px solid #888;
+    align-items: center;
+    flex-flow: column wrap;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+    backdrop-filter: blur(5.3px);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    gap: 1rem;
+    align-self: center;
+}
+
+#inizia {
+    cursor: pointer;
+    height: 3rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.7rem;
+    min-width: 12rem;
+    border: 1px solid #F17105;
+    border-radius: 16px;
+    background-color: rgb(240 248 255 / 75%);
+    color: black;
+}
+
+#inizia:hover {
+    color: rgb(0, 0, 0);
+    background-color: #4e4e9f;
+    opacity: 1;
+    background-image: radial-gradient(#F2A359 1px, transparent 1px), radial-gradient(#F2A359 1px, #b1e3eb 1px);
+    background-size: 40px 40px;
+    background-position: 0 0,20px 20px;
+    transform: scale(1.05);
+}
+
+label {
+    font-size: 1.3rem;
+}
+
+input {
+    font-size: 1.0rem;
+    background: #00000075;
+    outline: none;
+    border: none;
+    border-radius: 32px;
+    color: white;
+    padding: 10px;
 }
 
 .board {
     display: grid;
-    height: 20rem;
-    width: 20rem;
+    height: 19rem;
+    width: 19rem;
     gap: 1px;
     grid-template-columns: repeat(3, 1fr);
-    background-color: brown;
+    background-color: #F17105;
+}
+
+.board > .casella {
+    outline: none;
+    border: none;
+    padding: 0px;
 }
 
 
@@ -124,18 +191,47 @@ h2 {
   }
   
   .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    text-align: center;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    background: rgb(255 255 255 / 45%);
+    border-radius: 32px;
+    backdrop-filter: blur(5.3px);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    gap: 1rem;
+    align-self: center;
+    
   }
+
   
   .button-container {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
   }
   
   .button-container button {
-    margin: 5px;
+    height: 3rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.6rem;
+    width: 15rem;
+    min-width: 10rem;
+    border: 2px solid #F17105;
+    border-radius: 16px;
+    background-color: rgb(240 248 255 / 75%);
+    cursor: pointer;
   }
+
+ .button-container > button:hover {
+    color: rgb(0, 0, 0);
+    background-color: #4e4e9f;
+    opacity: 1;
+    background-image: radial-gradient(#F2A359 1px, transparent 1px), radial-gradient(#F2A359 1px, #b1e3eb 1px);
+    background-size: 40px 40px;
+    background-position: 0 0,20px 20px;
+    transform: scale(1.05);
+}
 
 
 
@@ -150,7 +246,7 @@ h2 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     gap: 5px;
-    background-color: #DACC3E;
+    background-color: #ECC30B;
     justify-content: center;
 }
 

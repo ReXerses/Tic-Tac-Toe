@@ -377,24 +377,26 @@ const game = (() => {
 
         // Crea il primo input di testo per il nome del player 1
         let player1Label = document.createElement('label');
-        player1Label.innerText = "Nome Player 1:";
+        player1Label.innerText = "Nome Giocatore 1:";
         form.appendChild(player1Label);
         
         let player1Input = document.createElement('input');
         player1Input.type = 'text';
         player1Input.name = 'player1Name';
         player1Input.setAttribute('required', 'true');
+        player1Input.setAttribute('autocomplete', 'off');
         form.appendChild(player1Input);
         
         // Crea il secondo input di testo per il nome del player 2
         let player2Label = document.createElement('label');
-        player2Label.innerText = "Nome Player 2:";
+        player2Label.innerText = "Nome Giocatore 2:";
         form.appendChild(player2Label);
         
         let player2Input = document.createElement('input');
         player2Input.type = 'text';
         player2Input.name = 'player2Name';
         player2Input.setAttribute('required', 'true');
+        player2Input.setAttribute('autocomplete', 'off');
         form.appendChild(player2Input);
         
         // Crea il div per i radio button del segno del player 1
@@ -431,8 +433,9 @@ const game = (() => {
         // Crea il pulsante di submit
         let submitButton = document.createElement('input');
         submitButton.type = 'submit';
-        submitButton.value = 'Invia';
+        submitButton.value = 'Start';
         submitButton.setAttribute('target', '_blank');
+        submitButton.setAttribute('id' , 'inizia');
         form.appendChild(submitButton);
 
         sceltaFlag = 0;
@@ -455,7 +458,6 @@ const game = (() => {
             eliminaSceltaPLayer (form);
           });
         
-        // Aggiungi il form alla posizione desiderata nel documento
         sceltePlayer.appendChild(form);
     }
 
@@ -472,13 +474,14 @@ const game = (() => {
 
         // Crea il primo input di testo per il nome del player 1
         let player1Label = document.createElement('label');
-        player1Label.innerText = "Nome Player 1:";
+        player1Label.innerText = "Nome Giocatore:";
         form.appendChild(player1Label);
         
         let player1Input = document.createElement('input');
         player1Input.type = 'text';
         player1Input.name = 'player1Name';
         player1Input.setAttribute('required', 'true');
+        player1Input.setAttribute('autocomplete', 'off');
         form.appendChild(player1Input);
         
         // Crea il div per i radio button del segno del player 1
@@ -515,8 +518,9 @@ const game = (() => {
         // Crea il pulsante di submit
         let submitButton = document.createElement('input');
         submitButton.type = 'submit';
-        submitButton.value = 'Invia';
+        submitButton.value = 'Inizia';
         submitButton.setAttribute('target', '_blank');
+        submitButton.setAttribute('id' , 'inizia');
         form.appendChild(submitButton);
 
         
@@ -537,7 +541,6 @@ const game = (() => {
             eliminaSceltaPLayer (form);
         });
         
-        // Aggiungi il form alla posizione desiderata nel documento
         sceltePlayer.appendChild(form);
         sceltaFlag = 1;
 
@@ -557,13 +560,14 @@ const game = (() => {
 
         // Crea il primo input di testo per il nome del player 1
         let player1Label = document.createElement('label');
-        player1Label.innerText = "Nome Player 1:";
+        player1Label.innerText = "Nome Giocatore:";
         form.appendChild(player1Label);
         
         let player1Input = document.createElement('input');
         player1Input.type = 'text';
         player1Input.name = 'player1Name';
         player1Input.setAttribute('required', 'true');
+        player1Input.setAttribute('autocomplete', 'off');
         form.appendChild(player1Input);
         
         // Crea il div per i radio button del segno del player 1
@@ -600,8 +604,9 @@ const game = (() => {
         // Crea il pulsante di submit
         let submitButton = document.createElement('input');
         submitButton.type = 'submit';
-        submitButton.value = 'Invia';
+        submitButton.value = 'Start';
         submitButton.setAttribute('target', '_blank');
+        submitButton.setAttribute('id' , 'inizia');
         form.appendChild(submitButton);
 
         
@@ -622,7 +627,6 @@ const game = (() => {
             eliminaSceltaPLayer (form);
         });
         
-        // Aggiungi il form alla posizione desiderata nel documento
         sceltePlayer.appendChild(form);
         sceltaFlag = 2;
 
